@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <script charset="utf-8" src="WebAPI.js"></script>
+    <script charset="utf-8" src="Cookies.js"></script>
+    <title>Login | Mais Sangue</title>
+        <link rel="stylesheet" href="css/reset.css" type="text/css" />
+    <link rel="stylesheet" href="css/css.css" type="text/css" media="screen" />
+</head>
+<body>
+
+
+    <div class="tudo">
+        <div class="limite">
+            <div class="topo">
+                <div class="logo">
+                    <img src="images/logo.png" />
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="projeto.html" >Projeto</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="LoginPage.html" class="selecionado">Login</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+   
+                <div class="bannerlogin">
+                    <div class="limite">
+                        <div class="esquerdologin">
+                            <h1>Não possui uma conta?</h1>
+                            <p>Se você não possui uma conta no +Sangue, clique no botão abaixo e faça agora mesmo seu cadastro, fique por dentro de quem doou sangue ou marque sua última doação conecte-se com sua conta no Facebook</p>
+
+                            <button type="button" id="btnCrie">Crie Sua Conta</button>
+                        </div>
+
+                        <div class="direitologin">
+                           <label for="txtLogin">Login: </label>
+                            <input type="text" id="txtEmail" name="txtEmail" placeholder="E-Mail" />
+
+                            <input type="password" id="txtSenha" name="txtSenha" placeholder="Senha" />
+
+                            <button type="button" id="btnLogin">Login</button>
+                            <button type="button" id="btnEsq">Esqueci minha senha</button>
+                        </div>
+                    </div>
+                </div>
+            
+
+       
+  <div class="rodape">
+        <div class="limite">
+            <p>Todos os direitos reservados ao Mais Sangue!</p>
+            <div class="ico_social">
+                <ul>
+                    <li><a href="#"><img src="images/ico_face.png" /></a></li>
+                    <li><a href="#"><img src="images/ico_twt.png" /></a></li>
+                    <li><a href="#"><img src="images/ico_lkd.png" /></a></li>
+                    <li><a href="#"><img src="images/ico_google.png" /></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+        
+    </div>
+
+  
+
+    
+
+
+    <script type="text/javascript">
+
+    var txtEmail, txtSenha, btnLogin, btnEsq, btnCrie, usuario, conStr;
+
+    txtEmail = document.getElementById("txtEmail");
+    txtSenha = document.getElementById("txtSenha");
+    btnLogin = document.getElementById("btnLogin");
+    btnEsq = document.getElementById("btnEsq");
+    btnCrie = document.getElementById("btnCrie");
+
+
+    btnCrie.onclick=function()
+    {
+        location.href = "Criacao.html";
+    }
+
+    btnLogin.onclick = function () {
+        var email, senha;
+
+        email = txtEmail.value;
+        senha = txtSenha.value;
+
+        // Valida os campos antes de enviar
+        if (email === "" || senha === "") {
+            alert("E-Mail ou Senha em branco!");
+            return;
+        }
+
+        usuario = { Email: email, Senha: senha };
+
+        try {
+            // Envia a requisição sincronamente, com o objeto sendo enviado no corpo
+            conStr = WebAPI.post("api/Cadastro/Login", usuario);
+            if (conStr.status === 200) {
+                // Tudo correu bem, e acabamos de receber o id da pessoa criada
+                if (conStr.value > 0) {
+                    usuario = { Codigo: conStr.value, Email: email };
+
+                    Cookies.create("usuario", JSON.stringify(usuario), 48);  //  Permanece o Cookie por 48hs
+
+                    location.href = "Cad_Doacao.html";   // Redirecionamento de tela
+                }
+
+                else {
+                    alert("usuário/senha inválidos!");
+                }
+            }
+
+            else {
+                // Erros devem ser tratados aqui!!!
+                alert("Erro de rede ao Logar");
+            }
+        }
+        catch (e) {
+            // Ocorreu algum erro durante a transmissão ou recebimento da requisição
+            // Erros devem ser tratados aqui!!!
+            alert(e);
+        }
+
+    };
+
+    btnEsq.onclick = function () {
+
+        location.href = "ReSenha.html";   // Redirecionamento de tela
+    }          
+        
+</script>
+</body>
+</html>

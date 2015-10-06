@@ -1,0 +1,149 @@
+﻿.tudo {
+    
+    margin: 0 auto;
+    width:100%;
+    min-height: 100%;
+    position: relative;
+    background: #efefef;
+
+}
+
+.content
+{  
+    font-family:Arial;
+    width:1080px;
+    margin: 0 auto;
+}
+
+.logocad {
+    
+    height: 82px;
+    width:100%;
+    margin-top: 50px;
+}
+
+.logocad img{
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    
+
+}
+.content form {        
+        margin-top:190px;
+        margin: 0 auto;
+        height: 450px;
+        padding: 50px 0;
+}
+
+.topoCad{
+    background:#d0212c;
+    height:40px;
+    color:#fff;
+    font: normal 25px arial;
+    margin: 0 auto;
+    padding: 10px 0;
+    line-height: 39px;
+}
+
+
+.formEsquerdo{
+    float:left;
+    padding: 15px;
+}
+
+.formEsquerdo form{
+    -moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border: 2px solid red;
+	display:inline-block;
+}
+
+.inputs{
+    padding:5px;
+
+}
+
+.inputs label{
+    color:#737373;
+    font-weight: bold;
+    font-size:17px;
+    margin:10px;
+    width: 143px;
+    float:left;
+    text-align:right;
+    line-height:30px;
+}
+
+.inputs input{
+    width: 294px;
+    height: 24px;
+    margin:10px;
+
+    -moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border: 1px solid #dadada;
+	display:inline-block;
+}
+
+.inputs select{
+    width: 296px;
+    height: 29px;
+    font-size: 15px;
+    margin:11px;
+    -moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border: 1px solid #dadada;
+	display:inline-block;
+}
+
+.formDireito{
+    float:left;
+    padding: 15px;
+
+}
+
+
+.botaoCad, .botaoBack{
+    margin: 55px 38px;
+    height: 40px;
+    float: left;
+}
+
+
+.botao {
+	background-color:#d0212c;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:none;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:10px 31px;
+	text-decoration:none;
+
+
+}
+.botao:hover {
+	background-color:#f34a4a;
+}
+.botao:active {
+	position:relative;
+	top:1px;
+}
+.rodape{
+    background:#322f2f;
+    color: #fff;
+    float: left;
+    width: 100%;
+    position: fixed;
+    height: 160px;
+    line-height: 50px;
+    font-size: 14px;
+}

@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+<head>
+	<meta charset="utf-8" />
+	<script charset="utf-8" src="WebAPI.js"></script>
+	<title>Cadastro de Doador</title>
+    <link rel="stylesheet" href="form.css" type="text/css" />
+    <link rel="stylesheet" href="reset.css" type="text/css" />
+</head>
+<body>
+    <div class="tudo">
+        <div class="topoCad">
+            <div class="content">
+                <h1>Cadastro</h1>
+
+            </div>
+        </div>
+
+                <div class="content">
+                    
+                    <div class="logocad"><img src="image/logo.png" /></div>
+                    <form name="formcad" method="post" id="formulario">
+                        <div class="formEsquerdo">
+                            <!--<label for="txtN">Cadastre-se aqui para receber novidades de campanhas de doação. ;D</label>-->
+
+
+                            <div class="inputs">
+                                <label for="txtNome">
+                                    Nome:
+                                </label>
+                                <input type="text" id="txtNome" name="txtNome" />
+                            </div>
+
+                            <div class="inputs">
+                                <label for="txtSobrenome">
+                                    Sobrenome:
+                                </label>
+                                <input type="text" id="txtSobrenome" name="txtSobrenome" />
+                            </div>
+
+                            <div class="inputs">
+                                <label for="txtPeso">
+                                    Peso:
+                                </label>
+                                <input type="text" id="txtPeso" name="txtPeso" />
+                            </div>
+
+                            <div class="inputs">
+                                <label for="txtSexo">
+                                    Sexo:
+                                </label>
+                                <select id="txtSexo">
+                                    <option value="-" selected="selected">Selecione</option>
+                                    <option value="F">Feminino</option>
+                                    <option value="M">Masculino</option>
+                                </select>
+                            </div>
+
+
+
+                            <div class="inputs">
+                                <label for="txtSangue">
+                                    Tipo sanguíneo:
+                                </label>
+                                <select id="txtSangue">
+                                    <option value="-" selected="selected">Selecione</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                </select>
+                            </div>
+
+                            <div class="botaoCad">
+                                <button class="botao" type="button" id="btnCriar">Criar Cadastro</button>
+                            </div>
+
+                            <div class="botaoBack">
+                                <button class="botao" type="button" id="btnVoltar">Voltar</button>
+                            </div>
+                        </div>
+
+                        <div class="formDireito">
+                            <div class="inputs">
+                                <label for="txtNasc">
+                                    Nascimento:
+                                </label>
+                                <input type="date" id="txtNasc" name="txtNasc" />
+                            </div>
+
+                            <div class="inputs">
+                                <label for="txtEmail">
+                                    E-mail:
+                                </label>
+                                <input type="email" id="txtEmail" name="txtEmail" />
+                            </div>
+
+                            <div class="inputs">
+                                <label for="txtTel">
+                                    Telefone:
+                                </label>
+                                <input type="text" id="txtTel" name="txtTel" />
+                            </div>
+
+                            <div class="inputs">
+                                <label for="txtSenha">
+                                    Senha:
+                                </label>
+                                <input type="password" id="txtSenha" name="txtSenha" />
+                            </div>
+
+
+                            <div class="inputs">
+                                <label for="txtConfSenha">
+                                    Repetir Senha:
+                                </label>
+                                <input type="password" id="txtConfSenha" name="txtConfSenha" />
+                            </div>
+                        </div>
+
+            
+            
+                    </form>
+                </div>
+
+            
+                    <footer class="rodape">
+                        <div class="content">
+                            Todos os direitos reservados ao Mais Sangue!
+                        </div>
+                    </footer>
+            
+        </div>
+
+		<script type="text/javascript">
+            var txtNome, txtSobrenome, txtSexo, txtPeso, txtSangue, txtNasc, txtEmail, txtTel, btnCriar, btnVoltar;
+
+			
+			txtNome = document.getElementById("txtNome");
+			txtSobrenome = document.getElementById("txtSobrenome");
+			txtSexo = document.getElementById("txtSexo");
+			txtPeso = document.getElementById("txtPeso");
+			txtSangue = document.getElementById("txtSangue");
+			txtNasc = document.getElementById("txtNasc");
+			txtEmail = document.getElementById("txtEmail");
+			txtTel = document.getElementById("txtTel");
+			txtSenha = document.getElementById("txtSenha");
+			txtConfSenha = document.getElementById("txtConfSenha");
+			btnCriar = document.getElementById("btnCriar");
+			btnVoltar = document.getElementById("btnVoltar");
+
+			btnCriar.onclick = function () {
+				var  codigo, nome, sobrenome, sexo, peso, sangue, nasc, email, tel, criar, usuario, senha, confSenha, conStr;
+
+				
+
+				nome = txtNome.value;
+				sobrenome = txtSobrenome.value;
+				sexo = txtSexo.value;
+				peso = txtPeso.value;
+				sangue = txtSangue.value;
+				nasc = txtNasc.value;
+				email = txtEmail.value;
+				tel = txtTel.value;
+				senha = txtSenha.value;
+				confSenha = txtConfSenha.value;
+				
+
+
+				// Valida os campos antes de enviar
+				if (txtNome.value === "" || txtSobrenome.value === "" || sexo === "-" || peso === "" || sangue === "-" ||
+					nasc === "" || email === "" || tel === "" || senha ==="" || confSenha === "")
+				{
+					alert("Há campos sem preencher, favor revisar!");
+					return;
+				}
+
+
+				if (txtConfSenha.value != txtSenha.value)
+				{
+					alert("Senha inválida, favor digitar novamente!");
+					return;
+				}
+
+				if (senha.length < 4 || confSenha.length < 4)
+				{
+					alert("Senha com menos de 8 caracteres, favor cadastrar nova senha.")
+					return;
+				}
+
+
+				// Monta o objeto pessoa para ser enviado
+				usuario = {
+					Nome: nome,
+					Sobrenome: sobrenome,
+					Sexo: sexo,
+					Peso: parseInt(peso),
+					TpSangue: sangue,
+					Nasc: nasc,
+					Email: email,
+					Fone: tel,
+					Senha: senha
+				};
+
+				try {
+					// Envia a requisição sincronamente, com o objeto sendo enviado no corpo
+					conStr = WebAPI.post("api/Cadastro/Criar", usuario);
+
+					if (conStr.status === 200)
+					{
+						// Tudo correu bem, e acabamos de receber o id da pessoa criada
+					    alert("Doador Cadastrado!");
+					    location.href = "LoginPage.html";   // Redirecionamento de tela
+					}
+
+					else
+					{
+						// Erros devem ser tratados aqui!!!
+						alert("Erro ao criar a Usuario!");
+					}
+				}
+
+				catch (e)
+				{
+					// Ocorreu algum erro durante a transmissão ou recebimento da requisição
+					// Erros devem ser tratados aqui!!!
+					alert(e);
+				}
+			};
+
+
+			btnVoltar.onclick = function () {
+
+			    location.href = "LoginPage.html";   // Redirecionamento de tela
+			}
+
+		</script>
+</body>
+</html>

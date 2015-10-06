@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+<head>
+	<meta charset="utf-8" />
+	<script charset="utf-8" src="WebAPI.js"></script>
+	<script charset="utf-8" src="Cookies.js"></script>
+
+	<title>Notificações | Mais Sangue</title>
+    <link rel="stylesheet" href="css/reset.css" type="text/css" />
+    <link rel="stylesheet" href="css/css.css" type="text/css" media="screen" />
+</head>
+<body>
+
+<div class="tudo">
+        <div class="limite">
+            <div class="topo">
+                <div class="logo">
+                    <img src="images/logo.png" />
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="projeto.html" >Projeto</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="LoginPage.html">Login</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+   
+                <div class="bannerSenha">
+                    <div class="limite">
+                            
+							<div class="camponotificacao">
+								<label for="ultDoacao">Sua última doação foi em: </label>
+								<input type="date" id="ultDoacao" />
+							
+								<label for="prxDoacao">Você poderá doar novamente á partir de: </label>
+								<input type="date" id="prxDoacao" />
+							
+								<input id="cbox" type="checkbox" />
+								<label for="cbox">Desejo receber uma notificação nesta data.</label><br />
+						
+								<button type="button" id="btnSalvar">Salvar</button>
+					
+								<button type="button" id="btnCadDoar">Cadatrar Doações</button><br />
+
+                                <button type="button" id="btnLogoff">Logoff</button>
+
+							</div>
+                        
+                    </div>
+                </div>
+            
+
+       
+		  <div class="rodape">
+		        <div class="limite">
+		            <p>Todos os direitos reservados ao Mais Sangue!</p>
+		            <div class="ico_social">
+		                <ul>
+		                    <li><a href="#"><img src="images/ico_face.png" /></a></li>
+		                    <li><a href="#"><img src="images/ico_twt.png" /></a></li>
+		                    <li><a href="#"><img src="images/ico_lkd.png" /></a></li>
+		                    <li><a href="#"><img src="images/ico_google.png" /></a></li>
+		                </ul>
+		            </div>
+		        </div>
+		    </div>
+        
+    </div>
+
+
+
+
+
+    <script type="text/javascript">
+
+        var prxDoacao, ultDoacao, response, usuario, cbox, btnLogoff;
+
+        if (Cookies.exists("usuario") === true) {
+            usuario = JSON.parse(Cookies.get("usuario"));
+        }
+        else {
+            usuario = null;
+        }
+
+        ultDoacao = document.getElementById("ultDoacao");
+        prxDoacao = document.getElementById("prxDoacao");
+        cbox = document.getElementById("cbox");
+        btnLogoff = document.getElementById("btnLogoff");
+
+        try {
+            // Envia a requisição sincronamente, com o objeto sendo enviado no corpo
+            response = WebAPI.get("api/Notificacao/Notif", "cod_doador", usuario.Codigo);
+
+            if (response.status === 200) {
+                ultDoacao.value = response.value.UltDoacao;
+                prxDoacao.value = response.value.PrxDoacao;
+            }
+
+            else {
+                // Erros devem ser tratados aqui!!!
+                alert("Erro ao consultar doações!");
+            }
+        }
+
+        catch (e) {
+            // Ocorreu algum erro durante a transmissão ou recebimento da requisição
+            // Erros devem ser tratados aqui!!!
+            alert(e);
+        }
+
+
+        btnCadDoar.onclick = function () {
+            location.href = "Cad_Doacao.html";
+        }
+
+
+        btnSalvar.onclick = function () {
+            // Confirmar se o botão checkbox foi selecionado!!!
+            if (cbox.checked) {
+                alert("Você recebera um e-mail no dia " + prxDoacao.value + " informando que já poderá doar Novamente!!! ");
+            }
+        };
+
+        btnLogoff.onclick = function () {
+
+            Cookies.remove("usuario");
+            location.href = "LoginPage.html"   // Alterar para Home
+        }
+
+
+    </script>
+
+</body>
+</html>

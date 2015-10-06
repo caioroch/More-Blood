@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <script charset="utf-8" src="WebAPI.js"></script>
+    <script charset="utf-8" src="Cookies.js"></script>
+    <title>Cadastro Doação | Mais Sangue</title>
+    <link rel="stylesheet" href="css/reset.css" type="text/css" />
+    <link rel="stylesheet" href="css/css.css" type="text/css" media="screen" />
+</head>
+<body>
+
+    <div class="tudo">
+        <div class="limite">
+            <div class="topo">
+                <div class="logo">
+                    <img src="images/logo.png" />
+                </div>
+                <div class="menu">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="projeto.html">Projeto</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="LoginPage.html">Login</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="bannerSenha">
+            <div class="limite">
+
+                <div class="camponotificacao">
+                    <h1>Cadastre sua Doação</h1>
+
+                    <label for="dtdoa">Digite a data da Doação</label>
+                    <input type="date" id="dtdoa" name="dtdoa" />
+
+                    <label for="txtdg2">Em qual Hospital você fez a doação? </label>
+                    <select id="selc1" onchange="selc1Change()">
+                        <option value="-" selected="selected">Selecione</option>
+                        <option value="Pró-Sangue">Pró-Sangue</option>
+                        <option value="Clinicas">Clinicas</option>
+                        <option value="São Camilo">São Camilo</option>
+                        <option value="Oswaldo Cruz">Oswaldo Cruz</option>
+                        <option value="Santa Casa de São Paulo">Santa Casa de São Paulo</option>
+                        <option value="Colsan">Colsan</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+
+                    <div id="pOutros">
+                        <label for="txtDg3">Outros</label>
+                        <!-- So sera ativado para digitar se for selecionado no menu de Hospitais a opção "Outros" -->
+                        <input type="text" id="digOutros" />
+
+
+                    </div>
+
+                    <button type="button" id="btnCadDoa">Cadastrar Doação</button>
+                    <button type="button" id="btnNvDoar">Ver Próxima Doação</button>
+
+                    <button type="button" id="btnLogoff">Logoff</button>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+        <div class="rodape">
+            <div class="limite">
+                <p>Todos os direitos reservados ao Mais Sangue!</p>
+                <div class="ico_social">
+                    <ul>
+                        <li><a href="#"><img src="images/ico_face.png" /></a></li>
+                        <li><a href="#"><img src="images/ico_twt.png" /></a></li>
+                        <li><a href="#"><img src="images/ico_lkd.png" /></a></li>
+                        <li><a href="#"><img src="images/ico_google.png" /></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <script type="text/javascript">
+        var dtdoa, selc1, seloutros, digOutros, usuario, btnCadDoa, btnNvDoar, btnLogoff;
+
+        if (Cookies.exists("usuario") === true) {
+            usuario = JSON.parse(Cookies.get("usuario"));
+        }
+        else {
+            usuario = null;
+        }
+
+        dtdoa = document.getElementById("dtdoa");
+        selc1 = document.getElementById("selc1");
+        btnCadDoa = document.getElementById("btnCadDoa");
+        btnNvDoar = document.getElementById("btnNvDoar");
+        seloutros = document.getElementById("seloutros");
+        digOutros = document.getElementById("digOutros");
+        btnLogoff = document.getElementById("btnLogoff");
+
+
+        btnNvDoar.onclick = function () {
+            if (usuario === null) {
+                alert("Usuario não existe");
+                return;
+            } else {
+                location.href = "Notificacao.html";
+            }
+        }
+
+        btnCadDoa.onclick = function () {
+            var dtdoacao, select, cadastrar, conStr1, doacao;
+
+            if (usuario === null) {
+                alert("Usuario não existe");
+                return;
+            }
+
+            dtdoacao = dtdoa.value;
+            select = selc1.value;
+            outros = digOutros.value;
+
+            if (dtdoacao === "" || select === "-") {
+                alert("Data de Doação ou Hospital não preenchido!!!");
+                return;
+
+            }
+            if (select === "Outros" & outros === "") {
+                alert("''Outros'' selecionado, favor informar o nome do  Hospital");
+                return;
+            }
+            if (select === "Outros" & outros !== "") {
+                select = digOutros.value;           // Gravar no banco o que for digitano no campo outros
+            }
+
+            // Monta o objeto pessoa para ser enviado
+            doacao = {
+                Dtdoacao: dtdoacao,
+                Hosp: select,
+                Coddoador: usuario.Codigo
+            };
+
+            try {
+                // Envia a requisição sincronamente, com o objeto sendo enviado no corpo
+                conStr1 = WebAPI.post("api/Cad_doacao/Cadastrar", doacao);
+
+                if (conStr1.status === 200) {
+                    // Tudo correu bem, e acabamos de receber o id da pessoa criada
+                    alert("Doação Cadastrada!!!");
+                }
+
+                else {
+                    // Erros devem ser tratados aqui!!!
+                    alert("Erro ao Cadastrar Doação!");
+                }
+            }
+
+            catch (e) {
+                // Ocorreu algum erro durante a transmissão ou recebimento da requisição
+                // Erros devem ser tratados aqui!!!
+                alert(e);
+            }
+        };
+
+        function selc1Change() {
+            var selc1 = document.getElementById("selc1");
+            var pOutros = document.getElementById("pOutros");
+
+            if (selc1.value != "Outros") {
+                pOutros.setAttribute("Style", "display:none");
+            }
+            else {
+                pOutros.setAttribute("Style", "display:block");
+            }
+        }
+
+        btnLogoff.onclick = function () {
+
+            Cookies.remove("usuario");
+            location.href = "LoginPage.html"
+        };
+
+    </script>
+
+</body>
+</html>
